@@ -1,11 +1,6 @@
 # -*- encoding: UTF-8 -*-
 require 'sinatra'
 require 'json'
-require "mechanize"
-require 'set'
-require 'digest/sha1'
-require 'erb'
-require 'open-uri'
 
 load "gyazo.rb"
 
@@ -29,9 +24,10 @@ end
 
 
 get '/' do
-	return "homu"
+	return "hello trickstar."
 end
 
+# http://localhost:5000/api/gyazo/?url=https://www.google.co.jp/
 post '/api/gyazo/upload/' do
 	if params[:file]
 		File.read params[:file][:filename]
@@ -49,6 +45,7 @@ post '/api/gyazo/upload/' do
 end
 
 
+# curl -F file=@web.rb.html http://localhost:5000/api/gyazo/upload/?width=600
 get '/api/gyazo/' do
 	url    = params[:url]
 	width  = params[:width] || 10
