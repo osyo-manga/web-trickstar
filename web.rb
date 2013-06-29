@@ -30,7 +30,6 @@ end
 # http://localhost:5000/api/gyazo/?url=https://www.google.co.jp/
 post '/api/gyazo/upload/' do
 	if params[:file]
-		File.read params[:file][:filename]
 		save_path = "./temp/upload_#{Time.now.to_i}.html"
 		File.open(save_path, "w") do |f|
 			f.write params[:file][:tempfile].read
