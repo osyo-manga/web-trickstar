@@ -57,3 +57,8 @@ get '/api/gyazo/' do
 end
 
 
+get '/detail/phantomjs' do
+	`phantomjs --version`
+end
+
+
