@@ -30,7 +30,7 @@ end
 # curl -F file=@web.rb.html http://localhost:5000/api/gyazo/upload/?width=600
 post '/api/gyazo/upload/' do
 	if params[:file]
-		save_path = "./temp/upload_#{Time.now.to_i}.html"
+		save_path = "./tmp/upload_#{Time.now.to_i}.html"
 		File.open(save_path, "w") do |f|
 			f.write params[:file][:tempfile].read
 		end
@@ -47,9 +47,9 @@ post '/api/gyazo/upload/' do
 	end
 end
 
+
 # http://localhost:5000/api/gyazo/?url=https://www.google.co.jp/
 # http://localhost:5000/api/gyazo/?url=http://www.amazon.co.jp/dp/B00DFTV49Y&bottom=500&right=800
-
 get '/api/gyazo/' do
 	url    = params[:url]
 	width  = params[:width] || 10
