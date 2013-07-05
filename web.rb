@@ -6,7 +6,7 @@ load "gyazo.rb"
 
 
 def gyazo_from_url(url, width, height, top, left, bottom, right)
-	png = "./image/#{Time.now.to_i}.png"
+	png = "./tmp/#{Time.now.to_i}.png"
 	result_phantomjs = `phantomjs capture.js #{url} #{png} #{width} #{height} #{top} #{left} #{bottom} #{right}`
 
 	if result_phantomjs.empty?
@@ -49,6 +49,7 @@ end
 
 # http://localhost:5000/api/gyazo/?url=https://www.google.co.jp/
 # http://localhost:5000/api/gyazo/?url=http://www.amazon.co.jp/dp/B00DFTV49Y&bottom=500&right=800
+
 get '/api/gyazo/' do
 	url    = params[:url]
 	width  = params[:width] || 10
