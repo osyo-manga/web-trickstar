@@ -21,23 +21,32 @@ page.open(url, function (status) {
 		var top  = phantom.args[4] || 0;
 		var left = phantom.args[5] || 0;
 
+		var max_height = page.evaluate(function() {
+			return $(document).height();
+		});
+
 		var height = phantom.args[6] || 0;
 		if( height == '0' ){
-			height = page.evaluate(function() {
-				return $(document).height();
-			});
+			height = max_height
 		}
 		height = height - top;
 
+		var max_width = page.evaluate(function() {
+			return $(document).width();
+		});
+
 		var width = phantom.args[7] || 0;
 		if( width == '0' ){
-			width = page.evaluate(function() {
-				return $(document).width();
-			});
+			width = max_width
 		}
 		width = width - left;
 
-		page.clipRect = { top: top, left: left, width: width, height: height };
+		page.clipRect = {
+			top:    top,
+			left:   left,
+			width:  width  > max_width  ? max_width  : width,
+			height: height > max_height ? max_height : height
+		};
 		page.render(output);
 		console.log(output);
 		phantom.exit();
