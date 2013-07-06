@@ -4,6 +4,22 @@ require 'json'
 
 load "gyazo.rb"
 
+# 削除するディレクトリ
+DELETEDIR = "/image/"
+
+# サブディレクトリを階層が深い順にソートした配列を作成
+dirlist = Dir::glob(DELETEDIR + "**/").sort {
+  |a,b| b.split('/').size <=> a.split('/').size
+}
+
+# サブディレクトリ配下の全ファイルを削除後、サブディレクトリを削除
+dirlist.each {|d|
+  Dir::foreach(d) {|f|
+    File::delete(d+f) if ! (/\.+$/ =~ f)
+  }
+  Dir::rmdir(d)
+}
+
 
 def gyazo_from_url(url, width, height, top, left, bottom, right)
 	png = "./tmp/#{Time.now.to_i}.png"
@@ -59,8 +75,7 @@ get '/api/gyazo/' do
 	bottom = params[:bottom] || 0
 	right  = params[:right] || 0
 	if url
-		return url
-# 		return gyazo_from_url(url, width, height, top, left, bottom, right)
+		return gyazo_from_url(url, width, height, top, left, bottom, right)
 	end
 	"Not found"
 end
