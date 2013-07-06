@@ -59,7 +59,8 @@ get '/api/gyazo/' do
 	bottom = params[:bottom] || 0
 	right  = params[:right] || 0
 	if url
-		return gyazo_from_url(url, width, height, top, left, bottom, right)
+		return url
+# 		return gyazo_from_url(url, width, height, top, left, bottom, right)
 	end
 	"Not found"
 end
