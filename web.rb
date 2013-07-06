@@ -1,12 +1,14 @@
 # -*- encoding: UTF-8 -*-
 require 'sinatra'
 require 'json'
+require 'addressable/uri'
 
 load "gyazo.rb"
 
 
 def gyazo_from_url(url, width, height, top, left, bottom, right)
 	png = "./tmp/#{Time.now.to_i}.png"
+	url = Addressable::URI.parse(url).normalize.to_s
 	result_phantomjs = `phantomjs capture.js "#{url}" #{png} #{width} #{height} #{top} #{left} #{bottom} #{right}`
 
 	if result_phantomjs.empty?
